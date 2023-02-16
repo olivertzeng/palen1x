@@ -38,12 +38,12 @@ while true; do
       ;;
   esac
 done
-elif [ "$jbtype" = "Rootful" ]; then
+elif [ $jbtype = "Rootful" ]; then
 while true; do
   CHOICE=$(gum table -f palen1x_menu.csv -w 6,7 --height 15 --header.foreground $color --cell.border thick --cell.foreground $border | cut -d ',' -f 1)
   gum format -t markdown "# Jailbreak Type: $jbtype"
   gum format -t markdown "## Arguments: $args"
-  case "$CHOICE" in
+  case $CHOICE in
     1)
       clear
       gum style --foreground 3 --border-foreground 11 --border rounded --align normal --margin "1 2" --padding "2 4" '== INFORMATION ==' 'If you encounter lockdownd errors make sure to unlock your device and replug.' 'arm64e is not supported!' '===== DEBUG =====' 'Chosen Jailbreak Type:'$jbtype'' 'Chosen Flags: '$args''

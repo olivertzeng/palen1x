@@ -1,5 +1,5 @@
-Verbose Boot (1)
-Safe Mode (2)
-Force Revert (3)
-Serial Number (4)
-Debug Log (5)
+1 Verbose
+2 Safe Mode
+3 Force Revert
+4 Serial
+5 Debug
