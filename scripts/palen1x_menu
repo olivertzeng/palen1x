@@ -2,32 +2,12 @@
 # Load functions and variables
 . /usr/bin/common
 PALEN1X_VERSION="1.0.6"
-
-export NEWT_COLORS='root=,black
-border=white,black
-title=white,black
-roottext=red,black
-window=red,black
-textbox=white,black
-button=black,green
-compactbutton=white,black
-listbox=white,black
-actlistbox=black,white
-actsellistbox=black,green
-checkbox=green,black
-actcheckbox=black,green
-'
-
-whiptail_height="$(($(tput lines) - 6))"
-whiptail_width="$(($(tput cols) - 20))"
-
+export LC_CTYPE="en_US.UTF-8"
+color=$((($RANDOM%6)+1))
+border=$(($color+8))
 while true; do
-  CHOICE="$(whiptail --nocancel --title "palen1x $PALEN1X_VERSION | use arrow keys" --menu '' $whiptail_height $whiptail_width 8 \
-    '1' 'palera1n' \
-    '2' 'SSH' \
-    '3' 'Shell' \
-    '4' 'Shut down' \
-    '5' 'Reboot' 3>&1 1>&2 2>&3)"
+  gum format -t markdown "## palen1x $PALEN1X_VERSION"
+  CHOICE=$(gum table -f palen1x_menu.csv -w 6,9 --height 15 --header.foreground $color --cell.border rounded --cell.foreground $border | cut -d ',' -f 1)
   case "$CHOICE" in
     1)
       clear

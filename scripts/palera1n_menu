@@ -1,58 +1,26 @@
 #!/bin/bash
 # Load functions and variables
 . /usr/bin/common
+export LC_CTYPE="en_US.UTF-8"
 arg=$(cat /usr/bin/.args)
 args=$(echo $arg)
 jbt=$(cat /usr/bin/.jbtype)
 jbtype=$(echo $jbt)
-
-export NEWT_COLORS='root=,black
-border=white,black
-title=white,black
-roottext=red,black
-window=red,black
-textbox=white,black
-button=black,green
-compactbutton=white,black
-listbox=white,black
-actlistbox=black,white
-actsellistbox=black,green
-checkbox=green,black
-actcheckbox=black,green
-'
-
-whiptail_height="$(($(tput lines) - 6))"
-whiptail_width="$(($(tput cols) - 20))"
+color=$((($RANDOM%6)+1))
+border=$(($color+8))
 
 if [ "$jbtype" = "Rootless" ]; then
 while true; do
-  CHOICE="$(whiptail --nocancel --title "palera1n | use arrow keys" --menu \
-    "
-  Jailbreak Type: $jbtype
-  Arguments: $args" $whiptail_height $whiptail_width 8 \
-    '1' 'Start' \
-    '2' 'Options' \
-    '3' 'Switch' \
-    '4' 'Exit' 3>&1 1>&2 2>&3)"
+  CHOICE=$(gum table -f palen1x_menu.csv -w 6,7 --height 15 --header.foreground $color --cell.border rounded --cell.foreground $border | cut -d ',' -f 1)
+  gum format -t markdown "# Jailbreak Type: $jbtype"
+  gum format -t markdown "## Arguments: $args"
   case "$CHOICE" in
     1)
       clear
-      echo ''
-      echo "# == INFORMATION =="
-      echo "# ${YELLOW}- If you encounter lockdownd errors make sure to${NORMAL}"
-      echo "# ${YELLOW}unlock your device and replug.${NORMAL}"
-      echo "# ${YELLOW}- arm64e is not supported!${NORMAL}"
-      echo "# ===== DEBUG ====="
-      echo "# Chosen Jailbreak Type: ${BLUE}$jbtype${NORMAL}"
-      echo "# Chosen Flags: ${BLUE}$args${NORMAL}"
-      echo ''
+      gum style --foreground 3 --border-foreground 11 --border rounded --align normal --margin "1 2" --padding "2 4" '== INFORMATION ==' 'If you encounter lockdownd errors make sure to unlock your device and replug.' 'arm64e is not supported!' '===== DEBUG =====' 'Chosen Jailbreak Type:'$jbtype'' 'Chosen Flags: '$args''
       /usr/bin/palera1n $args
       sleep 2
-      echo ''
-      echo "# ===== DEBUG ====="
-      echo "# Chosen Jailbreak Type: ${BLUE}$jbtype${NORMAL}"
-      echo "# Chosen Flags: ${BLUE}$args${NORMAL}"
-      echo ''
+      gum style --foreground 3 --border-foreground 11 --border rounded --align double --margin "1 2" --padding "2 4" '===== DEBUG =====' 'Chosen Jailbreak Type: '$jbtype'' 'Chosen Flags: '$args''
       enter_to_quit
       /usr/bin/palera1n_menu
       ;;
@@ -72,32 +40,16 @@ while true; do
 done
 elif [ "$jbtype" = "Rootful" ]; then
 while true; do
-  CHOICE="$(whiptail --nocancel --title "palera1n | use arrow keys" --menu \
-    "
-  Jailbreak Type: $jbtype
-  Arguments: -f $args" $whiptail_height $whiptail_width 8 \
-    '1' 'Start' \
-    '2' 'Options' \
-    '3' 'Switch' \
-    '4' 'Exit' 3>&1 1>&2 2>&3)"
+  CHOICE=$(gum table -f palen1x_menu.csv -w 6,7 --height 15 --header.foreground $color --cell.border thick --cell.foreground $border | cut -d ',' -f 1)
+  gum format -t markdown "# Jailbreak Type: $jbtype"
+  gum format -t markdown "## Arguments: $args"
   case "$CHOICE" in
     1)
       clear
-      echo ''
-      echo "# == INFORMATION =="
-      echo "# ${YELLOW}- If you encounter lockdownd errors make sure to${NORMAL}"
-      echo "# ${YELLOW}unlock your device and replug.${NORMAL}"
-      echo "# ${YELLOW}- arm64e is not supported!${NORMAL}"
-      echo "# == DEBUG =="
-      echo "# Chosen Jailbreak Type: ${BLUE}$jbtype${NORMAL}"
-      echo "# Chosen Flags: ${BLUE}$args${NORMAL}"
+      gum style --foreground 3 --border-foreground 11 --border rounded --align normal --margin "1 2" --padding "2 4" '== INFORMATION ==' 'If you encounter lockdownd errors make sure to unlock your device and replug.' 'arm64e is not supported!' '===== DEBUG =====' 'Chosen Jailbreak Type:'$jbtype'' 'Chosen Flags: '$args''
       /usr/bin/palera1n -f $args
       sleep 2
-      echo ''
-      echo "# == DEBUG =="
-      echo "# Chosen Jailbreak Type: ${BLUE}$jbtype${NORMAL}"
-      echo "# Chosen Flags: -f ${BLUE}$args${NORMAL}"
-      echo ''
+      gum style --foreground 3 --border-foreground 11 --border rounded --align double --margin "1 2" --padding "2 4" '===== DEBUG =====' 'Chosen Jailbreak Type: '$jbtype'' 'Chosen Flags: '$args''
       enter_to_quit
       /usr/bin/palera1n_menu
       ;;

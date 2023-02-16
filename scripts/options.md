@@ -1,0 +1,5 @@
+Verbose Boot (1)
+Safe Mode (2)
+Force Revert (3)
+Serial Number (4)
+Debug Log (5)
